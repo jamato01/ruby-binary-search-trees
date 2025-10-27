@@ -27,7 +27,38 @@ class Tree
       root.right_node = insert(value, root.right_node)
     end
 
-    return root
+    root
+  end
+
+  def delete(value, root = @root)
+    return root if root.nil?
+    
+    # Traverse tree
+    if root.data > value
+      root.left_node = delete(value, root.left_node)
+    elsif root.data < value
+      root.right_node = delete(value, root.right_node)
+    else
+
+      # Node with 0 or 1 children
+      return root.right_node if root.left_node.nil?
+      return root.left_node if root.right_node.nil?
+        
+      # Node with 2 children
+      successor = get_successor(root)
+      root.data = successor.data
+      root.right_node = delete(successor.data, root.right_node)
+    end
+
+    root
+  end
+
+  def get_successor(root)
+    current_node = root.right_node
+    while !current_node.nil? && !current_node.left_node.nil?
+      current_node = current_node.left_node
+    end
+    current_node
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
