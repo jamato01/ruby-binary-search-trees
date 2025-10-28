@@ -6,7 +6,7 @@ class Tree
     @root = build_tree(arr)
   end
 
-  def build_tree(arr, start_index = 0, end_index = arr.length)
+  def build_tree(arr, start_index = 0, end_index = arr.length - 1)
     return nil if start_index > end_index
       
     mid = start_index + (end_index - start_index) / 2
@@ -71,6 +71,21 @@ class Tree
     end
 
     root
+  end
+
+  def level_order(&block_arg)
+    return_arr = []
+    given_block = block_given? ? block_arg : Proc.new { |elem| return_arr << elem.data }
+    queue = []
+    queue << @root
+    while !queue.empty?
+      current_node = queue[0]
+      given_block.call(queue[0])
+      queue << current_node.left_node if !current_node.left_node.nil?
+      queue << current_node.right_node if !current_node.right_node.nil?
+      queue.shift
+    end
+    return_arr
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
