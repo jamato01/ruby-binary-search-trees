@@ -143,6 +143,17 @@ class Tree
     depth
   end
 
+  def balanced?(root = @root)
+    return_arr = []
+    check_block = Proc.new do |elem|
+      if !elem.right_node.nil? && !elem.left_node.nil?
+        return_arr << ((height(elem.left_node.data) - height(elem.right_node.data)).abs <= 1)
+      end
+    end
+    return_arr = inorder(root, return_arr, &check_block)
+    return_arr.all?
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
   pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_node
   puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
