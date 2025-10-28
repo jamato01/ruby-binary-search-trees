@@ -1,11 +1,11 @@
-require_relative 'lib/tree'
-require_relative 'lib/node'
+require_relative "lib/tree"
+require_relative "lib/node"
 
 system("clear")
 
 # Step 1
 puts "Building the original tree using an array of 15 random numbers 1-100:"
-test_tree = Tree.new(Array.new(15) {rand(1..100)})
+test_tree = Tree.new(Array.new(15) { rand(1..100) })
 test_tree.pretty_print
 
 # Step 2
@@ -36,10 +36,10 @@ puts "\nIs the tree balanced? #{test_tree.balanced?}"
 puts "\nRebalancing the tree:"
 test_tree.rebalance.pretty_print
 
-#Step 7
+# Step 7
 puts "\nIs the tree balanced? #{test_tree.balanced?}"
 
-#Step 8
+# Step 8
 puts "\nDifferent traversal methods give the following arrays:"
 puts "\nLevel Order (Breadth First):"
 puts "#{test_tree.level_order}"
