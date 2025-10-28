@@ -115,6 +115,22 @@ class Tree
     return_arr
   end
 
+  def height(value = @root.data)
+    return nil if find(value).nil?
+    this_node = find(value)
+    height_traversal(this_node)
+  end
+
+  def height_traversal(root)
+    if root.nil?
+      return -1
+    else
+      left_height = height_traversal(root.left_node)
+      right_height = height_traversal(root.right_node)
+      return 1 + [left_height, right_height].max
+    end
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
   pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_node
   puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
