@@ -88,6 +88,33 @@ class Tree
     return_arr
   end
 
+  def inorder(root = @root, return_arr = [], &block_arg)
+    return root if root.nil?
+    given_block = block_given? ? block_arg : Proc.new { |elem| return_arr << elem.data }
+    inorder(root.left_node, return_arr, &given_block)
+    given_block.call(root)
+    inorder(root.right_node, return_arr, &given_block)
+    return_arr
+  end
+
+  def preorder(root = @root, return_arr = [], &block_arg)
+    return root if root.nil?
+    given_block = block_given? ? block_arg : Proc.new { |elem| return_arr << elem.data }
+    given_block.call(root)
+    preorder(root.left_node, return_arr, &given_block)
+    preorder(root.right_node, return_arr, &given_block)
+    return_arr
+  end
+
+  def postorder(root = @root, return_arr = [], &block_arg)
+    return root if root.nil?
+    given_block = block_given? ? block_arg : Proc.new { |elem| return_arr << elem.data }
+    postorder(root.left_node, return_arr, &given_block)
+    postorder(root.right_node, return_arr, &given_block)
+    given_block.call(root)
+    return_arr
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
   pretty_print(node.right_node, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_node
   puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
